@@ -6,7 +6,7 @@ const EXPECTED_AUTHOR = "MR_FARHAN";
 
 module.exports = {
   config: {
-    name: "farhan_tx",
+    name: "fahim_tx",
     aliases: ["tx"],
     author: EXPECTED_AUTHOR,
     category: "fun",
