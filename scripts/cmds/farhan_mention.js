@@ -1,86 +1,93 @@
-const fs = require("fs-extra");
+const axios = require("axios");
+
+let imageIndex = 0;
 
 module.exports = {
   config: {
-    name: "farhan_mention",
-    version: "7.0.0",
-    author: "Farhan-Khan", // ⚠️ এটা change করলে bot বন্ধ হয়ে যাবে
+    name: "adminmention",
+    version: "20.0.0",
+    author: "Farhan-Khan",
     countDown: 0,
     role: 0,
-    shortDescription: "Admin mention reply styled",
+    shortDescription: "Fast caption + image reply",
     category: "system"
   },
 
   onStart: async function () {},
 
   onChat: async function ({ event, message }) {
+    // 🔒 Author lock
+    if (this.config.author !== "Farhan-Khan") return;
 
-    // 🔒 AUTHOR LOCK
-    if (this.config.author !== "Farhan-Khan") {
-      console.log("⚠️ Author changed! Module stopped.");
-      return;
-    }
-
-    // 👑 ADMINS
     const admins = [
-      {
-        uid: "61589439339903",
-        names: ["মিৃঁ'স্টাৃঁ'ররৃঁ'হা্ঁ'নৃঁ"]
-      },
-      {
-        uid: "61589439339903",
-        names: ["ヽ｟ᏟᎬϴዐዐዐ 🙁😚☺️👿"]
-      }
+      { uid: "61589439339903", names: ["M'ʀ","ফাহিম","fahim","Fahim"] },
+      { uid: "61589439339903", names: ["Admin"] }
     ];
 
     const senderID = String(event.senderID);
-
-    // ❌ Admin নিজে লিখলে reply দিবে না
     if (admins.some(a => a.uid === senderID)) return;
 
-    const text = (event.body || "").toLowerCase().trim();
+    const text = (event.body || "").toLowerCase();
     const mentionedIDs = event.mentions ? Object.keys(event.mentions) : [];
 
-    // 🔍 MENTION DETECT
     const isMentioning = admins.some(admin =>
       mentionedIDs.includes(admin.uid) ||
-      text.includes(admin.uid) ||
       admin.names.some(name => text.includes(name.toLowerCase()))
     );
 
     if (!isMentioning) return;
 
-    // 💬 RAW CAPTIONS
-    const captions = [
-      "Mantion_দিস না _𝗙𝗔𝗛𝗜𝗠 বস এর মন মন ভালো নেই আস্কে-!💔🥀",
-      "- আমার বস 𝗙𝗔𝗛𝗜𝗠 এর সাথে কেউ সেক্স করে না থুক্কু টেক্স করে নাহ🫂💔",
-      "👉আমার বস ♻️ 𝐑𝐉 𝐅𝗔𝗛𝗜𝗠 এখন বিজি আছে । তার ইনবক্সে এ মেসেজ দিয়ে রাখো 🔰 ♪√বস ফ্রি হলে আসবে🧡😁😜🐒",
-      "বস 𝗙𝗔𝗛𝗜𝗠 কে এত মেনশন না দিয়ে বক্স আসো হট করে দিবো🤷‍ঝাং 😘🥒",
-      "বস 𝗙𝗔𝗛𝗜𝗠 কে Mantion_দিলে চুম্মাইয়া ঠুটের কালার change কইরা,লামু 💋😾😾🔨",
-      "𝗙𝗔𝗛𝗜𝗠 বস এখন বিজি জা বলার আমাকে বলতে পারেন_!!😼🥰",
-      "𝗙𝗔𝗛𝗜𝗠 বস কে এতো মেনশন নাহ দিয়া বস কে একটা জি এফ দে 😒 😏",
-      "Mantion_না দিয়ে বস 𝗙𝗔𝗛𝗜𝗠 এর সাথে সিরিয়াস প্রেম করতে চাইলে ইনবক্স",
-      "বস 𝗙𝗔𝗛𝗜𝗠 কে মেনশন দিসনা পারলে একটা জি এফ দে",
-      "বাল পাকনা Mantion_দিস না বস 𝗙𝗔𝗛𝗜𝗠 প্রচুর বিজি আছে 🥵🥀🤐",
-      "চুমু খাওয়ার বয়স টা আমার বস 𝗙𝗔𝗛𝗜𝗠 চকলেট🍫খেয়ে উড়িয়ে দিল 🤗"
+    // 🖼️ Image list (ভিডিওর জায়গায়)
+    const images = [
+      "https://files.catbox.moe/fxre5k.mp4",
+      "https://files.catbox.moe/zkfe54.mp4",
+      "https://files.catbox.moe/rbpxmu.mp4"
     ];
 
-    const formatCaption = (text) => {
-      return `
-━━━━━━━━━━━━━━━━━━━━
-- ${text}
-━━━━━━━━━━━━━━━━━━━━`;
-    };
+    const imageUrl = images[imageIndex];
+    imageIndex = (imageIndex + 1) % images.length;
 
-    const rawCaption = captions[Math.floor(Math.random() * captions.length)];
-    const styledCaption = formatCaption(rawCaption);
+    // ✍️ captions
+    const captions = [
+      "Mantion_দিস না ফাহিম বস এর মন মন ভালো নেই আস্কে-!💔🥀",
+      "- আমার বস ফাহিম এর সাথে কেউ সেক্স করে না থুক্কু টেক্স করে নাহ🫂💔",
+      "👉আমার বস  🧛‍♀️🧛‍♀️🧛‍♀️ ফাহিম এখন বিজি আছে । তার ইনবক্সে এ মেসেজ দিয়ে রাখো বস ফ্রি হলে আসবে🧡😁😜🐒",
+      "বস ফাহিম কে এত মেনশন না দিয়ে বক্স আসো হট করে দিবো🤷‍ঝাং 😘🥒",
+      "বস ফাহিম কে Mantion_দিলে চুম্মাইয়া ঠুটের কালার change কইরা,লামু 💋😾😾🔨",
+      "ফাহিম বস এখন বিজি জা বলার আমাকে বলতে পারেন_!!😼🥰",
+      "ফাহিম বস কে এতো মেনশন নাহ দিয়া বস কে একটা জি এফ দে 😒 😏",
+      "Mantion_না দিয়ে বস ফাহিম এর সাথে সিরিয়াস প্রেম করতে চাইলে ইনবক্স",
+      "বস ফাহিম কে মেনশন দিসনা পারলে একটা জি এফ দে",
+      "বাল পাকনা Mantion_দিস না বস ফাহিম প্রচুর বিজি আছে 🥵🥀🤐",
+      "চুমু খাওয়ার বয়স টা আমার বস ফাহিম চকলেট🍫খেয়ে উড়িয়ে দিল 🤗"
+    ];
+
+    const mentionNames = mentionedIDs.map(id => `@${id}`).join(", ");
+
+    const caption = `
+✿•≫───────────────≪•✿
+『 ${captions[Math.floor(Math.random() * captions.length)]} 』
+✿•≫───────────────≪•✿
+`;
 
     try {
-      await message.reply({
-        body: styledCaption
+      // ⚡ Fast Image Fetch
+      const imgStream = await axios({
+        url: imageUrl,
+        method: "GET",
+        responseType: "stream",
+        timeout: 5000, // fast response
+        headers: { "User-Agent": "Mozilla/5.0" }
       });
+
+      await message.reply({
+        body: caption,
+        attachment: imgStream.data
+      });
+
     } catch (err) {
-      console.log("Error sending admin reply:", err);
+      console.log("❌ Image error:", err.message);
+      await message.reply("😢 পিক দিতে পারলাম না");
     }
   }
 };
