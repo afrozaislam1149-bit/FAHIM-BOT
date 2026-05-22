@@ -52,7 +52,7 @@ module.exports = {
       "mahi": "https://files.catbox.moe/3u6shs.mp3",
 
       "good night": "https://files.catbox.moe/i29m4q.mp3",
-      "maye": "https://files.catbox.moe/q62hco.mp3",
+      "গুড নাইট": "https://files.catbox.moe/i29m4q.mp3",
 
       "good morning": "https://files.catbox.moe/8gzqx5.mp3",
 
@@ -63,10 +63,13 @@ module.exports = {
       "love": "https://files.catbox.moe/dwwa0b.mp3",
       "oh": "https://files.catbox.moe/oqdhpi.mp3",
       "wifi": "https://files.catbox.moe/kgl4qy.mp3",
-      "maye": "https://files.catbox.moe/941wy3.mp3",
+
+      "maye": "https://files.catbox.moe/q62hco.mp3",
+      "maiya": "https://files.catbox.moe/941wy3.mp3",
+
       "mon": "https://files.catbox.moe/y951y2.mp3",
       "sundor": "https://files.catbox.moe/j8aly8.mp3",
-      "song9": "https://files.catbox.moe/xxxxx9.mp3",
+
       "replly": "https://files.catbox.moe/knbcsa.mp3",
       "mama": "https://files.catbox.moe/6r9a0q.mp3",
       "jamai": "https://files.catbox.moe/tksdsh.mp3",
