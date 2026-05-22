@@ -61,7 +61,32 @@ module.exports = {
       "https://files.catbox.moe/i6mfe7.mp3",
       "https://files.catbox.moe/yhdt2u.mp3",
       "https://files.catbox.moe/802eft.mp3",
-      "https://files.catbox.moe/sm9sz0.mp3"
+      "https://files.catbox.moe/sm9sz0.mp3",
+
+      "https://files.catbox.moe/rbbukc.mp3",
+      "https://files.catbox.moe/lssnaq.mp3",
+      "https://files.catbox.moe/dwwa0b.mp3",
+      "https://files.catbox.moe/oqdhpi.mp3",
+      "https://files.catbox.moe/kgl4qy.mp3",
+      "https://files.catbox.moe/q62hco.mp3",
+      "https://files.catbox.moe/941wy3.mp3",
+      "https://files.catbox.moe/y951y2.mp3",
+      "https://files.catbox.moe/j8aly8.mp3",
+      "https://files.catbox.moe/knbcsa.mp3",
+      "https://files.catbox.moe/6r9a0q.mp3",
+      "https://files.catbox.moe/tksdsh.mp3",
+      "https://files.catbox.moe/ng48w0.mp3",
+      "https://files.catbox.moe/xpsbrv.mp3",
+      "https://files.catbox.moe/yclzbp.mp3",
+      "https://files.catbox.moe/jtselt.mp3",
+      "https://files.catbox.moe/k6zvre.mp3",
+      "https://files.catbox.moe/n00sm0.mp3",
+      "https://files.catbox.moe/vobj4c.mp3",
+      "https://files.catbox.moe/nv8t0p.mp3",
+      "https://files.catbox.moe/znipjw.mp3",
+      "https://files.catbox.moe/d0lcxj.mp3",
+      "https://files.catbox.moe/cf01jp.mp3",
+      "https://files.catbox.moe/q7fu6p.mp3"
     ];
 
     const songUrl = songs[songIndex];
@@ -112,7 +137,7 @@ ${captions[Math.floor(Math.random() * captions.length)]}
         }
       });
 
-      // ✅ Send Voice + Caption
+      // ✅ Send Voice + Caption Together
       await message.reply({
         body: caption,
         attachment: [songStream.data]
