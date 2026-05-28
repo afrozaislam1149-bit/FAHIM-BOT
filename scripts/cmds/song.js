@@ -1,77 +1,112 @@
-const a = require("axios");
-const b = require("fs");
-const c = require("path");
-const d = require("yt-search");
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
+const yts = require("yt-search");
 
-const nix = "https://raw.githubusercontent.com/aryannix/stuffs/master/raw/apis.json";
+const apiConfigUrl =
+  "https://raw.githubusercontent.com/aryannix/stuffs/master/raw/apis.json";
 
 module.exports = {
   config: {
     name: "song",
     aliases: ["music", "sing"],
-    version: "0.0.1",
-    author: "FARHAN-KHAN",
+    version: "1.0.0",
+    author: "FARHAN-KHAN (GPT FIXED)",
     countDown: 5,
     role: 0,
-    shortDescription: "Sing tomake chai",
+    shortDescription: "Download music from YouTube",
     longDescription: "Search and download music from YouTube",
     category: "MUSIC",
-    guide: "/music <song name or YouTube URL>"
+    guide: "{p}song <name or youtube link>"
   },
 
-  onStart: async function ({ api: e, event: f, args: g }) {
-    if (!g.length) return e.sendMessage("❌ Provide a song name or YouTube URL.", f.threadID, f.messageID);
-
-    let baseApi;
-    const i = await e.sendMessage("🎵 Please wait...", f.threadID, null, f.messageID);
-    
-    try {
-      const configRes = await a.get(nix);
-      baseApi = configRes.data && configRes.data.api;
-      if (!baseApi) throw new Error("Configuration Error: Missing API in GitHub JSON.");
-    } catch (error) {
-      e.unsendMessage(i.messageID);
-      return e.sendMessage("❌ Failed to fetch API configuration from GitHub.", f.threadID, f.messageID);
+  onStart: async function ({ api, event, args }) {
+    if (!args.length) {
+      return api.sendMessage(
+        "❌ Give a song name or YouTube link.",
+        event.threadID,
+        event.messageID
+      );
     }
 
-    let h = g.join(" ");
+    let loadingMsg;
 
     try {
-      let j;
-      if (h.startsWith("http")) {
-        j = h;
-      } else {
-        const k = await d(h);
-        if (!k || !k.videos.length) throw new Error("No results found.");
-        j = k.videos[0].url;
-      }
-
-      const l = `${baseApi}/play?url=${encodeURIComponent(j)}`;
-      const m = await a.get(l);
-      const n = m.data;
-
-      if (!n.status || !n.downloadUrl) throw new Error("API failed to return download URL.");
-
-      const o = `${n.title}.mp3`.replace(/[\\/:"*?<>|]/g, "");
-      const p = c.join(__dirname, o);
-
-      const q = await a.get(n.downloadUrl, { responseType: "arraybuffer" });
-      b.writeFileSync(p, q.data);
-
-      await e.sendMessage(
-        { attachment: b.createReadStream(p), body: `🎵 𝗠𝗨𝗦𝗜𝗖\n━━━━━━━━━━━━━━━\n\n${n.title}` },
-        f.threadID,
-        () => {
-          b.unlinkSync(p);
-          e.unsendMessage(i.messageID);
-        },
-        f.messageID
+      loadingMsg = await api.sendMessage(
+        "🎵 Searching song...",
+        event.threadID,
+        event.messageID
       );
 
-    } catch (r) {
-      console.error(r);
-      e.sendMessage(`❌ Failed to download song: ${r.message}`, f.threadID, f.messageID);
-      e.unsendMessage(i.messageID);
+      // GET API CONFIG
+      const configRes = await axios.get(apiConfigUrl);
+      const baseApi = configRes.data?.api;
+
+      if (!baseApi) throw new Error("API config missing");
+
+      const input = args.join(" ");
+      let videoUrl;
+
+      // CHECK URL OR SEARCH
+      if (input.startsWith("http")) {
+        videoUrl = input;
+      } else {
+        const search = await yts(input);
+        if (!search.videos.length) throw new Error("No song found");
+        videoUrl = search.videos[0].url;
+      }
+
+      // DOWNLOAD API CALL
+      const apiUrl = `${baseApi}/play?url=${encodeURIComponent(videoUrl)}`;
+      const res = await axios.get(apiUrl);
+      const data = res.data;
+
+      if (!data?.status || !data?.downloadUrl) {
+        throw new Error("Download API failed");
+      }
+
+      // FILE NAME SAFE
+      const fileName = `${data.title}.mp3`.replace(/[\\/:"*?<>|]/g, "");
+      const filePath = path.join(__dirname, fileName);
+
+      // DOWNLOAD AUDIO
+      const audio = await axios.get(data.downloadUrl, {
+        responseType: "arraybuffer"
+      });
+
+      fs.writeFileSync(filePath, audio.data);
+
+      // SEND SONG
+      await api.sendMessage(
+        {
+          body: `🎵 SONG READY\n━━━━━━━━━━━━━━\n\n${data.title}`,
+          attachment: fs.createReadStream(filePath)
+        },
+        event.threadID,
+        event.messageID
+      );
+
+      // CLEAN FILE
+      fs.unlinkSync(filePath);
+
+      if (loadingMsg?.messageID) {
+        api.unsendMessage(loadingMsg.messageID);
+      }
+
+    } catch (err) {
+      console.error(err);
+
+      try {
+        if (loadingMsg?.messageID) {
+          api.unsendMessage(loadingMsg.messageID);
+        }
+      } catch {}
+
+      return api.sendMessage(
+        `❌ Error: ${err.message}`,
+        event.threadID,
+        event.messageID
+      );
     }
   }
 };
