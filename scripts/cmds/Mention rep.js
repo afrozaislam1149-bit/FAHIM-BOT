@@ -24,25 +24,25 @@ const TRIGGERS = [
 
   // 🟢 FARHAN SYSTEM
   {
-    words: ["farhan","Farhan","FARHAN","ফারহান"],
+    words: ["fahim","Fahim","FAHIM","ফাহিম"],
 
     texts: [
-      "👉 ফারহান বস এখন বিজি জা বলার আমাকে বলতে পারেন_!!😼🥰",
-      "🔥 বস ফারহান কে ডাকিস না পারলে একটা জি এফ দে...!😃",
-      "😎 চুমু খাওয়ার বয়স টা আমার বস ফারহান চকলেট🍫খেয়ে উড়িয়ে দিল 🤗",
-      "👉 আমার বস ♻️ 𝐑𝐉 𝐅𝐀𝐑𝐇𝐀𝐍 এখন বিজি আছে । তার ইনবক্সে এ মেসেজ দিয়ে রাখো https://m.me/MR.MUNNA.220 🔰 ♪√বস ফ্রি হলে আসবে🧡😁😜"
+      "👉  বস এখন বিজি জা বলার আমাকে বলতে পারেন!!😼🥰",
+      "🔥 বস কে ডাকিস না পারলে একটা জি এফ দে...!😃",
+      "😎 চুমু খাওয়ার বয়স টা আমার বস চকলেট🍫খেয়ে উড়িয়ে দিল 🤗",
+      "👉 আমার বস ♻️ 𝗙𝗔𝗛𝗜𝗠 এখন বিজি আছে । তার ইনবক্সে এ মেসেজ দিয়ে রাখো বস ফ্রি হলে আসবে🧡😁😜"
     ],
 
     images: [
-      "https://i.imgur.com/mvjVHCD.jpeg",
-      "https://i.imgur.com/vWIuNpc.jpeg"
+      "https://i.imgur.com/cxSplwo.jpeg",
+      "https://i.imgur.com/rwisfrC.jpeg"
     ]
   },
 
   // 🤖 MENTION SYSTEM
   {
     words: [
-      "@এৃঁলেৃঁ'ক্সৃঁ সিৃঁ'জুৃঁ'কাৃঁ",
+      "@ঝ্ঁগ্ঁরা্ঁটে্ঁ বে্ঁবি্ঁ",
       "@সিৃঁ'জুৃঁ সিৃঁ'জুৃঁ'কাৃঁ",
       "@সিৃঁ'জুৃঁ'কাৃঁ সিৃঁ'জুৃঁ"
     ],
@@ -50,11 +50,11 @@ const TRIGGERS = [
     replies: [
       {
         text: "🤖 আমাকে মেনশন দিয়ে লাভ নাই 😆 আমি একটা রোবট শুধু ফান করার জন্য!",
-        image: "https://i.imgur.com/rkrXNso.jpeg"
+        image: "https://i.imgur.com/Pe8PWDs.jpeg"
       },
       {
-        text: "😽 আমি একটা বট, বস ফারহান বানাইছে 😎",
-        image: "https://i.imgur.com/zrpFJUc.jpeg"
+        text: "😽 আমি একটা বট, বস ফাহিম বানাইছে 😎",
+        image: "https://i.imgur.com/Pe8PWDs.jpeg"
       }
     ]
   }
