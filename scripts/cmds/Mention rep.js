@@ -34,8 +34,8 @@ const TRIGGERS = [
     ],
 
     images: [
-      "https://i.imgur.com/cxSplwo.jpeg",
-      "https://i.imgur.com/rwisfrC.jpeg"
+      "https://files.catbox.moe/6vtg6z.jpeg",
+      "https://files.catbox.moe/uqv9ei.jpeg"
     ]
   },
 
