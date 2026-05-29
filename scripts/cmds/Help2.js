@@ -52,9 +52,9 @@ module.exports = {
 
       // Random help image
       const helpListImages = [
-        "https://i.imgur.com/cxSplwo.jpeg",
-        "https://i.imgur.com/rwisfrC.jpeg",
-        "https://files.catbox.moe/bfo96i.mp4"
+        "https://files.catbox.moe/6vtg6z.jpeg",
+        "https://files.catbox.moe/uqv9ei.jpeg",
+        "https://files.catbox.moe/uwks71.mp4"
       ];
       const helpListImage = helpListImages[Math.floor(Math.random() * helpListImages.length)];
 
